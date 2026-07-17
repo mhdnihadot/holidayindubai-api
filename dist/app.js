@@ -24,7 +24,7 @@ app.use((0, morgan_1.default)(env_1.default.nodeEnv === 'development' ? 'dev' : 
 // CORS configuration
 const corsOptions = {
     origin: env_1.default.nodeEnv === 'production'
-        ? (env_1.default.corsOrigin ? env_1.default.corsOrigin.split(',').map(o => o.trim()) : [])
+        ? (env_1.default.corsOrigin ? env_1.default.corsOrigin.split(',').map(o => o.trim()) : ['https://www.holidayindubai.com', 'https://holidayindubai.com'])
         : true, // Use `true` to reflect origin, as '*' is not allowed with credentials: true
     credentials: true,
 };
