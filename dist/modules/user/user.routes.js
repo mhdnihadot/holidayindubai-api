@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const user_controller_1 = __importDefault(require("./user.controller"));
+const validate_middleware_1 = __importDefault(require("../../middlewares/validate.middleware"));
+const user_validation_1 = require("./user.validation");
+const auth_middleware_1 = require("../../middlewares/auth.middleware");
+const router = express_1.default.Router();
+router.post('/register', (0, validate_middleware_1.default)(user_validation_1.register), user_controller_1.default.register);
+router.post('/login', (0, validate_middleware_1.default)(user_validation_1.login), user_controller_1.default.login);
+router.post('/google-auth', user_controller_1.default.googleAuth);
+router.post('/apple-auth', user_controller_1.default.appleAuth);
+router.post('/refresh-token', user_controller_1.default.refreshToken);
+router.use(auth_middleware_1.protect);
+router.use((0, auth_middleware_1.restrictTo)('user'));
+router.post('/logout', user_controller_1.default.logout);
+router.get('/profile', user_controller_1.default.getProfile);
+router.put('/profile', (0, validate_middleware_1.default)(user_validation_1.updateProfile), user_controller_1.default.updateProfile);
+router.get('/wishlist', user_controller_1.default.getWishlist);
+router.post('/wishlist/:projectId', user_controller_1.default.toggleWishlist);
+router.delete('/account', user_controller_1.default.deleteAccount);
+exports.default = router;
